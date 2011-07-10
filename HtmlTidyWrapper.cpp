@@ -20,7 +20,7 @@
 
 
 /*
-The XmlDocument creation code has been ripped and transformed from the code 
+The XmlDocument creation code has been ripped and transformed from the code
 presented by Bjoern Hoehrmann at:
 
   http://sourceforge.net/mailarchive/forum.php?forum_id=1650&max_rows=25&style=nested&viewmonth=200301
@@ -35,8 +35,8 @@ Also see
 
 http://www.developmentnow.com/g/17_2003_8_0_0_90254/-check-commonlanguageruntime-version-link-error.htm
 
-for a way to resolve to chicken-and-egg situation that results from using (or 
-not using) nochkclr.obj, as that one is compiled using the wrong run-time 
+for a way to resolve to chicken-and-egg situation that results from using (or
+not using) nochkclr.obj, as that one is compiled using the wrong run-time
 libraries - at least for our purposes...
 
 */
@@ -50,10 +50,10 @@ using namespace System::Text;
 
 
 /*
- * thanks to: 
+ * thanks to:
  *
- *   http://www.thescripts.com/forum/thread281720.html   
- * for a hint how to code an [out] function argument 
+ *   http://www.thescripts.com/forum/thread281720.html
+ * for a hint how to code an [out] function argument
  */
 using namespace System::Runtime::InteropServices;
 
@@ -82,14 +82,14 @@ using namespace System::Runtime::InteropServices;
 			pin_ptr<unsigned char> VARCONCAT(ngbc, __LINE__) = &VARCONCAT(gbc, __LINE__)[0];                    \
 			GC::Collect();                                                                                      \
 			GC::WaitForPendingFinalizers();                                                                     \
-			ctmbstr unmanaged_lvalue = (ctmbstr)VARCONCAT(ngbc, __LINE__); /* reinterpret_cast<ctmbstr>(ngbc) ? */       
+			ctmbstr unmanaged_lvalue = (ctmbstr)VARCONCAT(ngbc, __LINE__); /* reinterpret_cast<ctmbstr>(ngbc) ? */
 
 #else
 
 #define GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(unmanaged_lvalue, managed_rvalue)                          \
 			array<unsigned char>^ VARCONCAT(gbc, __LINE__) = managed_rvalue;                                    \
 			pin_ptr<unsigned char> VARCONCAT(ngbc, __LINE__) = &VARCONCAT(gbc, __LINE__)[0];                    \
-			ctmbstr unmanaged_lvalue = (ctmbstr)VARCONCAT(ngbc, __LINE__); /* reinterpret_cast<ctmbstr>(ngbc) ? */       
+			ctmbstr unmanaged_lvalue = (ctmbstr)VARCONCAT(ngbc, __LINE__); /* reinterpret_cast<ctmbstr>(ngbc) ? */
 
 #endif
 
@@ -105,7 +105,7 @@ using namespace System::Runtime::InteropServices;
 
 
 
-namespace HtmlTidy 
+namespace HtmlTidy
 {
 
 
@@ -133,7 +133,7 @@ public enum class HtmlTidyOptionId
 
   CharEncoding = TidyCharEncoding,    /**< In/out character encoding */
   InCharEncoding = TidyInCharEncoding,  /**< Input character encoding (if different) */
-  OutCharEncoding = TidyOutCharEncoding, /**< Output character encoding (if different) */    
+  OutCharEncoding = TidyOutCharEncoding, /**< Output character encoding (if different) */
   Newline = TidyNewline,         /**< Output line ending (default to platform) */
 
   DoctypeMode = TidyDoctypeMode,     /**< See doctype property */
@@ -141,7 +141,7 @@ public enum class HtmlTidyOptionId
 
   DuplicateAttrs = TidyDuplicateAttrs,  /**< Keep first or last duplicate attribute */
   AltText = TidyAltText,         /**< Default text for alt attribute */
-  
+
   /* obsolete */
   SlideStyle = TidySlideStyle,      /**< Style sheet for slides: not used for anything yet */
 
@@ -231,7 +231,7 @@ public enum class HtmlTidyOptionId
   EmptyTags = TidyEmptyTags,       /**< Declared empty tags */
   PreTags = TidyPreTags,         /**< Declared pre tags */
 
-  AccessibilityCheckLevel = TidyAccessibilityCheckLevel, /**< Accessibility check level 
+  AccessibilityCheckLevel = TidyAccessibilityCheckLevel, /**< Accessibility check level
                                    0 (old style), or 1, 2, 3 */
 
   VertSpace = TidyVertSpace,       /**< degree to which markup is spread out vertically */
@@ -246,7 +246,7 @@ public enum class HtmlTidyOptionId
   SortAttributes = TidySortAttributes,      /**< Sort attributes */
   MergeSpans = TidyMergeSpans,       /**< Merge multiple SPANs */
   AnchorAsName = TidyAnchorAsName,    /**< Define anchors as name attributes */
-  FixTitle = TidyTitle,            /**< Fix an empty title element by filling it with a copy of the first header element in the document body */ 
+  FixTitle = TidyTitle,            /**< Fix an empty title element by filling it with a copy of the first header element in the document body */
   N_OPTIONS = N_TIDY_OPTIONS       /**< Must be last */
 };
 
@@ -308,8 +308,8 @@ public enum class HtmlTidyAttrSortStrategy
 
 /* I/O and Message handling interface
 **
-** By default, Tidy will define, create and use 
-** instances of input and output handlers for 
+** By default, Tidy will define, create and use
+** instances of input and output handlers for
 ** standard C buffered I/O (i.e. FILE* stdin,
 ** FILE* stdout and FILE* stderr for content
 ** input, content output and diagnostic output,
@@ -671,13 +671,13 @@ public enum class HtmlTidyAttrId
 */
 public enum class HtmlTidyTextFormat
 {
-  Normal = TidyTextFormat_Normal,	/**< NORMAL (default) */ 
+  Normal = TidyTextFormat_Normal,	/**< NORMAL (default) */
   Preformatted = TidyTextFormat_Preformatted,	/**< PREFORMATTED */
   Comment = TidyTextFormat_Comment,	/**< COMMENT */
   AttribValue = TidyTextFormat_AttribValue,	/**< ATTRIBVALUE */
   NoWrap = TidyTextFormat_NoWrap,	/**< NOWRAP */
   CDATA = TidyTextFormat_CDATA,	/**< CDATA */
-}; 
+};
 /* Warning: TidyTextFormat values must match the #define's in pprint.h exactly! */
 
 
@@ -710,16 +710,16 @@ public enum class HtmlTidyTextFormat
 	 *   http://groups.google.com/group/microsoft.public.dotnet.xml/browse_thread/thread/be405f41e4e158e4/122a8e219c7a7d17?lnk=st&q=xmldocument+load+GetEntity&rnum=3&hl=en#122a8e219c7a7d17
 	 * for more info.
 	 */
-	private ref class DummyUrlResolver: public XmlUrlResolver 
+	private ref class DummyUrlResolver: public XmlUrlResolver
 	{
 	public:
-		virtual Object^ GetEntity(Uri^ absoluteUri, String^ role, Type^ ofObjectToReturn) override 
+		virtual Object^ GetEntity(Uri^ absoluteUri, String^ role, Type^ ofObjectToReturn) override
 		{
-			if (ofObjectToReturn == nullptr) 
+			if (ofObjectToReturn == nullptr)
 			{
 				return Stream::Null;
 			}
-			if (ofObjectToReturn != nullptr) 
+			if (ofObjectToReturn != nullptr)
 			{
 				return Stream::Null;
 			}
@@ -798,7 +798,7 @@ public enum class HtmlTidyTextFormat
 				Bool gettxt = tidyNodeGetRawText(tdoc, n, mode, 0, &textbuf);
 				if (gettxt && textbuf.bp)
 				{
-					textstr = gcnew String((ctmbstr)textbuf.bp, 0, textbuf.size, Text::Encoding::UTF8);
+					textstr = gcnew String((ctmbstr)textbuf.bp, 0, (int)textbuf.size, Text::Encoding::UTF8);
 				}
 				tidyBufFree(&textbuf);
 			}
@@ -816,7 +816,7 @@ public enum class HtmlTidyTextFormat
 				Bool gettxt = tidyNodeGetFormattedText(tdoc, n, mode, 0, &textbuf);
 				if (gettxt && textbuf.bp)
 				{
-					textstr = gcnew String((ctmbstr)textbuf.bp, 0, textbuf.size, Text::Encoding::UTF8);
+					textstr = gcnew String((ctmbstr)textbuf.bp, 0, (int)textbuf.size, Text::Encoding::UTF8);
 				}
 				tidyBufFree(&textbuf);
 			}
@@ -855,36 +855,36 @@ public enum class HtmlTidyTextFormat
 					String^ textstr = String::Empty;
 					if (gettxt && textbuf.bp)
 					{
-						textstr = gcnew String((ctmbstr)textbuf.bp, 0, textbuf.size, Text::Encoding::UTF8);
+						textstr = gcnew String((ctmbstr)textbuf.bp, 0, (int)textbuf.size, Text::Encoding::UTF8);
 					}
 					tidyBufFree(&textbuf);
 					Bool getcmttxt = tidyNodeGetFormattedText(tdoc, n, TidyTextFormat_Comment, 0, &textbuf);
 					String^ cmttextstr = String::Empty;
 					if (getcmttxt && textbuf.bp)
 					{
-						cmttextstr = gcnew String((ctmbstr)textbuf.bp, 0, textbuf.size, Text::Encoding::UTF8);
+						cmttextstr = gcnew String((ctmbstr)textbuf.bp, 0, (int)textbuf.size, Text::Encoding::UTF8);
 					}
 					tidyBufFree(&textbuf);
 					Bool getattrtxt = tidyNodeGetFormattedText(tdoc, n, TidyTextFormat_AttribValue, 0, &textbuf);
 					String^ attrtextstr = String::Empty;
 					if (getattrtxt && textbuf.bp)
 					{
-						attrtextstr = gcnew String((ctmbstr)textbuf.bp, 0, textbuf.size, Text::Encoding::UTF8);
+						attrtextstr = gcnew String((ctmbstr)textbuf.bp, 0, (int)textbuf.size, Text::Encoding::UTF8);
 					}
 					tidyBufFree(&textbuf);
 					Bool getrawtxt = tidyNodeGetRawText(tdoc, n, TidyTextFormat_Normal, 0, &textbuf);
 					String^ rawtextstr = String::Empty;
 					if (getrawtxt && textbuf.bp)
 					{
-						rawtextstr = gcnew String((ctmbstr)textbuf.bp, 0, textbuf.size, Text::Encoding::UTF8);
+						rawtextstr = gcnew String((ctmbstr)textbuf.bp, 0, (int)textbuf.size, Text::Encoding::UTF8);
 					}
 					tidyBufFree(&textbuf);
-				// Copy the unescaped value of this node into the given TidyBuffer as UTF-8 
+				// Copy the unescaped value of this node into the given TidyBuffer as UTF-8
 					Bool getnodeValueTxt = tidyNodeGetValue(tdoc, n, &textbuf);
 					String^ nodeValuetextstr = String::Empty;
 					if (getnodeValueTxt && textbuf.bp)
 					{
-						nodeValuetextstr = gcnew String((ctmbstr)textbuf.bp, 0, textbuf.size, Text::Encoding::UTF8);
+						nodeValuetextstr = gcnew String((ctmbstr)textbuf.bp, 0, (int)textbuf.size, Text::Encoding::UTF8);
 					}
 					tidyBufFree(&textbuf);
 
@@ -906,7 +906,7 @@ public enum class HtmlTidyTextFormat
 						if (tname != NULL)
 						{
 							XmlNode^ e = nullptr;
-							
+
 							name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 							switch (tagid)
@@ -930,7 +930,7 @@ public enum class HtmlTidyTextFormat
 									{
 										attval = gcnew String(tattval, 0, tmbstrlen(tattval), Text::Encoding::UTF8);
 									}
-							
+
 									e = doc->CreateElement(name, attval);
 								}
 								}
@@ -959,7 +959,7 @@ public enum class HtmlTidyTextFormat
 
 				case TidyNode_DocType:     /* DOCTYPE */
 					{
-						ctmbstr tname = "DOCTYPE";                 
+						ctmbstr tname = "DOCTYPE";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 						ctmbstr nodename = tidyNodeGetName(n);
 						String^ nodestr = nullptr;
@@ -1029,7 +1029,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_Comment:     /* Comment */
 					{
-						ctmbstr tname = "Comment";                 
+						ctmbstr tname = "Comment";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 						String^ textstr = GetRawTextInNode(n, TidyTextFormat_Normal);
@@ -1057,7 +1057,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_Text:        /* Text */
 					{
-						ctmbstr tname = "Text";                    
+						ctmbstr tname = "Text";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 						String^ textstr = GetRawTextInNode(n, TidyTextFormat_Normal);
@@ -1073,7 +1073,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_CDATA:       /* Unparsed Text */
 					{
-						ctmbstr tname = "CDATA";                   
+						ctmbstr tname = "CDATA";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 						String^ textstr = GetRawTextInNode(n, TidyTextFormat_Normal);
@@ -1089,7 +1089,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_Section:     /* XML Section */
 					{
-						ctmbstr tname = "XML Section";             
+						ctmbstr tname = "XML Section";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 						XmlNode^ e = doc->CreateElement(name);
@@ -1103,7 +1103,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_Asp:         /* ASP Source */
 					{
-						ctmbstr tname = "ASP";                     
+						ctmbstr tname = "ASP";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 						XmlNode^ e = doc->CreateElement(name);
@@ -1117,7 +1117,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_Jste:        /* JSTE Source */
 					{
-						ctmbstr tname = "JSTE";                    
+						ctmbstr tname = "JSTE";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 						XmlNode^ e = doc->CreateElement(name);
@@ -1131,7 +1131,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_Php:         /* PHP Source */
 					{
-						ctmbstr tname = "PHP";                     
+						ctmbstr tname = "PHP";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 
 						XmlNode^ e = doc->CreateElement(name);
@@ -1145,7 +1145,7 @@ public enum class HtmlTidyTextFormat
 					}
 				case TidyNode_XmlDecl:     /* XML Declaration */
 					{
-						ctmbstr tname = "XML Declaration";         
+						ctmbstr tname = "XML Declaration";
 						String^ name = gcnew String(tname, 0, tmbstrlen(tname), Text::Encoding::UTF8);
 						TidyAttr ver = tidyAttrGetById(n, TidyAttr_VERSION);
 						TidyAttr enc = tidyAttrGetById(n, TidyAttr_ENCODING);
@@ -1314,7 +1314,7 @@ public enum class HtmlTidyTextFormat
 
 					rc = tidySetErrorSink(tdoc, errsink);   // Capture diagnostics
 				}
-				
+
 				if (rc < 0 || !errsink || !errbuf)
 				{
 					if (errsink)
@@ -1403,7 +1403,7 @@ public enum class HtmlTidyTextFormat
 		{
 			if (errbuf)
 			{
-				String^ ret = gcnew String((ctmbstr)errbuf->bp, 0, errbuf->size, Text::Encoding::UTF8);
+				String^ ret = gcnew String((ctmbstr)errbuf->bp, 0, (int)errbuf->size, Text::Encoding::UTF8);
 
 				return ret;
 			}
@@ -1463,7 +1463,7 @@ public enum class HtmlTidyTextFormat
 				status = tidySaveSink(tdoc, &outsink);
 				if (status >= 0)
 				{
-					result = gcnew String((ctmbstr)outbuf.bp, 0, outbuf.size, Text::Encoding::UTF8);
+					result = gcnew String((ctmbstr)outbuf.bp, 0, (int)outbuf.size, Text::Encoding::UTF8);
 				}
 				tidyBufFree(&outbuf);
 			}
@@ -1490,19 +1490,19 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Detected HTML version: 0, 2, 3 or 4 */
-		int TidyDetectedHtmlVersion(void) 
+		int TidyDetectedHtmlVersion(void)
 		{
 			return tidyDetectedHtmlVersion(tdoc);
 		};
 
 		/** Input is XHTML? */
-		bool TidyDetectedXhtml(void) 
+		bool TidyDetectedXhtml(void)
 		{
 			return (no != tidyDetectedXhtml(tdoc));
 		};
 
 		/** Input is generic XML (not HTML or XHTML)? */
-		bool TidyDetectedGenericXml(void) 
+		bool TidyDetectedGenericXml(void)
 		{
 			return (no != tidyDetectedGenericXml(tdoc));
 		};
@@ -1510,25 +1510,25 @@ public enum class HtmlTidyTextFormat
 		/** Number of Tidy errors encountered. If > 0, output is suppressed
 		** unless TidyForceOutput is set.
 		*/
-		uint TidyErrorCount(void) 
+		uint TidyErrorCount(void)
 		{
 			return tidyErrorCount(tdoc);
 		};
 
 		/** Number of Tidy warnings encountered. */
-		uint TidyWarningCount(void) 
+		uint TidyWarningCount(void)
 		{
 			return tidyWarningCount(tdoc);
 		};
 
 		/** Number of Tidy accessibility warnings encountered. */
-		uint TidyAccessWarningCount(void) 
+		uint TidyAccessWarningCount(void)
 		{
 			return tidyAccessWarningCount(tdoc);
 		};
 
 		/** Number of Tidy configuration errors encountered. */
-		uint TidyConfigErrorCount(void) 
+		uint TidyConfigErrorCount(void)
 		{
 			return tidyConfigErrorCount(tdoc);
 		};
@@ -1536,7 +1536,7 @@ public enum class HtmlTidyTextFormat
 		/* Get/Set configuration options
 		*/
 		/** Load an ASCII Tidy configuration, stored in the config String^ */
-		int TidyLoadConfigFromString(String^ config) 
+		int TidyLoadConfigFromString(String^ config)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(str, Text::Encoding::UTF8->GetBytes(config));
 			TidyBuffer buffer = {0};
@@ -1548,14 +1548,14 @@ public enum class HtmlTidyTextFormat
 			return ret;
 		};
 
-		int TidyLoadConfigFromFile(String^ configfile) 
+		int TidyLoadConfigFromFile(String^ configfile)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(fname, Text::Encoding::UTF8->GetBytes(configfile));
 			return tidyLoadConfig(tdoc, fname);
 		};
 
 		/** Load a Tidy configuration, stored in the config string, with the specified character encoding */
-		int TidyLoadConfigFromStringEnc(String^ config, String^ charenc) 
+		int TidyLoadConfigFromStringEnc(String^ config, String^ charenc)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(str, Text::Encoding::UTF8->GetBytes(config));
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(enc, Text::Encoding::UTF8->GetBytes(charenc));
@@ -1568,7 +1568,7 @@ public enum class HtmlTidyTextFormat
 			return ret;
 		};
 
-		int TidyLoadConfigEncFromFile(String^ configfile, String^ charenc) 
+		int TidyLoadConfigEncFromFile(String^ configfile, String^ charenc)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(fname, Text::Encoding::UTF8->GetBytes(configfile));
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(enc, Text::Encoding::UTF8->GetBytes(charenc));
@@ -1581,7 +1581,7 @@ public enum class HtmlTidyTextFormat
 		** Values include: ascii, latin1, raw, utf8, iso2022, mac,
 		** win1252, utf16le, utf16be, utf16, big5 and shiftjis. Case in-sensitive.
 		*/
-		int TidySetCharEncoding(String^ encnam) 
+		int TidySetCharEncoding(String^ encnam)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(enc, Text::Encoding::UTF8->GetBytes(encnam));
 			return tidySetCharEncoding(tdoc, enc);
@@ -1590,7 +1590,7 @@ public enum class HtmlTidyTextFormat
 		/** Set the input encoding for parsing markup.
 		** As for TidySetCharEncoding but only affects the input encoding
 		**/
-		int TidySetInCharEncoding(String^ encnam) 
+		int TidySetInCharEncoding(String^ encnam)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(enc, Text::Encoding::UTF8->GetBytes(encnam));
 			return tidySetInCharEncoding(tdoc, enc);
@@ -1598,7 +1598,7 @@ public enum class HtmlTidyTextFormat
 
 		/** Set the output encoding.
 		**/
-		int TidySetOutCharEncoding(String^ encnam) 
+		int TidySetOutCharEncoding(String^ encnam)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(enc, Text::Encoding::UTF8->GetBytes(encnam));
 			return tidySetOutCharEncoding(tdoc, enc);
@@ -1614,7 +1614,7 @@ public enum class HtmlTidyTextFormat
 		*/
 
 		/** Applications using TidyLib may want to augment command-line and
-		** configuration file options. Setting this callback allows an application 
+		** configuration file options. Setting this callback allows an application
 		** developer to examine command-line and configuration file options after
 		** TidyLib has examined them and failed to recognize them.
 		**/
@@ -1623,14 +1623,14 @@ public enum class HtmlTidyTextFormat
 
 
 		/** Get option ID by name */
-		HtmlTidyOptionId TidyOptGetIdForName(String^ optnam) 
+		HtmlTidyOptionId TidyOptGetIdForName(String^ optnam)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(name, Text::Encoding::UTF8->GetBytes(optnam));
 			return (HtmlTidyOptionId)tidyOptGetIdForName(name);
 		};
 
 		/** Get iterator for list of option */
-		/** 
+		/**
 		Example:
 		<pre>
 		TidyIterator itOpt = TidyGetOptionList(tdoc) {};
@@ -1642,36 +1642,36 @@ public enum class HtmlTidyTextFormat
 		</pre>
 		*/
 
-		TidyIterator TidyGetOptionList(void) 
+		TidyIterator TidyGetOptionList(void)
 		{
 			return tidyGetOptionList(tdoc);
 		};
 		/** Get next Option */
-		TidyOption TidyGetNextOption(TidyIterator* pos) 
+		TidyOption TidyGetNextOption(TidyIterator* pos)
 		{
 			return tidyGetNextOption(tdoc, pos);
 		};
 
 		/** Lookup option by ID */
-		TidyOption TidyGetOption(HtmlTidyOptionId optId) 
+		TidyOption TidyGetOption(HtmlTidyOptionId optId)
 		{
 			return tidyGetOption(tdoc, (TidyOptionId)optId);
 		};
 		/** Lookup option by name */
-		TidyOption TidyGetOptionByName(String^ optnam) 
+		TidyOption TidyGetOptionByName(String^ optnam)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(name, Text::Encoding::UTF8->GetBytes(optnam));
 			return tidyGetOptionByName(tdoc, name);
 		};
 
 		/** Get ID of given Option */
-		HtmlTidyOptionId TidyOptGetId(TidyOption opt) 
+		HtmlTidyOptionId TidyOptGetId(TidyOption opt)
 		{
 			return (HtmlTidyOptionId)tidyOptGetId(opt);
 		};
 
 		/** Get name of given Option */
-		String^ TidyOptGetName(TidyOption opt) 
+		String^ TidyOptGetName(TidyOption opt)
 		{
 			ctmbstr str = tidyOptGetName(opt);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1679,25 +1679,25 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Get datatype of given Option */
-		HtmlTidyOptionType TidyOptGetType(TidyOption opt) 
+		HtmlTidyOptionType TidyOptGetType(TidyOption opt)
 		{
 			return (HtmlTidyOptionType)tidyOptGetType(opt);
 		};
 
 		/** Is Option read-only? */
-		bool TidyOptIsReadOnly(TidyOption opt) 
+		bool TidyOptIsReadOnly(TidyOption opt)
 		{
 			return (no != tidyOptIsReadOnly(opt));
 		};
 
 		/** Get category of given Option */
-		HtmlTidyConfigCategory TidyOptGetCategory(TidyOption opt) 
+		HtmlTidyConfigCategory TidyOptGetCategory(TidyOption opt)
 		{
 			return (HtmlTidyConfigCategory)tidyOptGetCategory(opt);
 		};
 
 		/** Get default value of given Option as a String^ */
-		String^ TidyOptGetDefault(TidyOption opt) 
+		String^ TidyOptGetDefault(TidyOption opt)
 		{
 			ctmbstr str = tidyOptGetDefault(opt);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1705,25 +1705,25 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Get default value of given Option as an unsigned integer */
-		ulong TidyOptGetDefaultInt(TidyOption opt) 
+		ulong TidyOptGetDefaultInt(TidyOption opt)
 		{
 			return tidyOptGetDefaultInt(opt);
 		};
 
 		/** Get default value of given Option as a boolean value */
-		bool TidyOptGetDefaultBool(TidyOption opt) 
+		bool TidyOptGetDefaultBool(TidyOption opt)
 		{
 			return (no != tidyOptGetDefaultBool(opt));
 		};
 
 		/** Iterate over Option "pick list" */
-		TidyIterator TidyOptGetPickList(TidyOption opt) 
+		TidyIterator TidyOptGetPickList(TidyOption opt)
 		{
 			return tidyOptGetPickList(opt);
 		};
 
 		/** Get next String^ value of Option "pick list" */
-		String^ TidyOptGetNextPick(TidyOption opt, TidyIterator* pos) 
+		String^ TidyOptGetNextPick(TidyOption opt, TidyIterator* pos)
 		{
 			ctmbstr str = tidyOptGetNextPick(opt, pos);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1731,7 +1731,7 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Get current Option value as a String^ */
-		String^ TidyOptGetValue(HtmlTidyOptionId optId) 
+		String^ TidyOptGetValue(HtmlTidyOptionId optId)
 		{
 			ctmbstr str = tidyOptGetValue(tdoc, (TidyOptionId)optId);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1739,14 +1739,14 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Set Option value as a String^ */
-		bool TidyOptSetValue(HtmlTidyOptionId optId, String^ val) 
+		bool TidyOptSetValue(HtmlTidyOptionId optId, String^ val)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(valstr, Text::Encoding::UTF8->GetBytes(val));
 			return (no != tidyOptSetValue(tdoc, (TidyOptionId)optId, valstr));
 		};
 
 		/** Set named Option value as a string. Good if not sure of type. */
-		bool TidyOptParseValue(String^ optnam, String^ val) 
+		bool TidyOptParseValue(String^ optnam, String^ val)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(optnamstr, Text::Encoding::UTF8->GetBytes(optnam));
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(valstr, Text::Encoding::UTF8->GetBytes(val));
@@ -1754,31 +1754,31 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Get current Option value as an integer */
-		ulong TidyOptGetInt(HtmlTidyOptionId optId) 
+		ulong TidyOptGetInt(HtmlTidyOptionId optId)
 		{
 			return tidyOptGetInt(tdoc, (TidyOptionId)optId);
 		};
 
 		/** Set Option value as an integer */
-		bool TidyOptSetInt(HtmlTidyOptionId optId, ulong val) 
+		bool TidyOptSetInt(HtmlTidyOptionId optId, ulong val)
 		{
 			return (no != tidyOptSetInt(tdoc, (TidyOptionId)optId, val));
 		};
 
 		/** Get current Option value as a boolean flag */
-		bool TidyOptGetBool(HtmlTidyOptionId optId) 
+		bool TidyOptGetBool(HtmlTidyOptionId optId)
 		{
 			return (no != tidyOptGetBool(tdoc, (TidyOptionId)optId));
 		};
 
 		/** Set Option value as a boolean flag */
-		bool TidyOptSetBool(HtmlTidyOptionId optId, bool val) 
+		bool TidyOptSetBool(HtmlTidyOptionId optId, bool val)
 		{
 			return (no != tidyOptSetBool(tdoc, (TidyOptionId)optId, (val ? yes : no)));
 		};
 
 		/** Get current Option value as a tristate flag */
-		HtmlTidyTriState TidyOptGetAutoBool(HtmlTidyOptionId optId) 
+		HtmlTidyTriState TidyOptGetAutoBool(HtmlTidyOptionId optId)
 		{
 			switch (tidyOptGetInt(tdoc, (TidyOptionId)optId))
 			{
@@ -1794,7 +1794,7 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Set Option value as a tristate flag */
-		bool TidyOptSetAutoBool(HtmlTidyOptionId optId, HtmlTidyTriState val) 
+		bool TidyOptSetAutoBool(HtmlTidyOptionId optId, HtmlTidyTriState val)
 		{
 			int v = TidyAutoState;
 
@@ -1816,43 +1816,43 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Reset option to default value by ID */
-		bool TidyOptResetToDefault(HtmlTidyOptionId opt) 
+		bool TidyOptResetToDefault(HtmlTidyOptionId opt)
 		{
 			return (no != tidyOptResetToDefault(tdoc, (TidyOptionId)opt));
 		};
 
 		/** Reset all options to their default values */
-		bool TidyOptResetAllToDefault(void) 
+		bool TidyOptResetAllToDefault(void)
 		{
 			return (no != tidyOptResetAllToDefault(tdoc));
 		};
 
 		/** Take a snapshot of current config settings */
-		bool TidyOptSnapshot(void) 
+		bool TidyOptSnapshot(void)
 		{
 			return (no != tidyOptSnapshot(tdoc));
 		};
 
 		/** Reset config settings to snapshot (after document processing) */
-		bool TidyOptResetToSnapshot(void) 
+		bool TidyOptResetToSnapshot(void)
 		{
 			return (no != tidyOptResetToSnapshot(tdoc));
 		};
 
 		/** Any settings different than default? */
-		bool TidyOptDiffThanDefault(void) 
+		bool TidyOptDiffThanDefault(void)
 		{
 			return (no != tidyOptDiffThanDefault(tdoc));
 		};
 
 		/** Any settings different than snapshot? */
-		bool TidyOptDiffThanSnapshot(void) 
+		bool TidyOptDiffThanSnapshot(void)
 		{
 			return (no != tidyOptDiffThanSnapshot(tdoc));
 		};
 
 		/** Copy current configuration settings from one document to another */
-		bool TidyOptCopyConfig(TidyParser^ To) 
+		bool TidyOptCopyConfig(TidyParser^ To)
 		{
 			if (To)
 			{
@@ -1866,7 +1866,7 @@ public enum class HtmlTidyTextFormat
 
 		/** Get character encoding name. Used with TidyCharEncoding,
 		** TidyOutCharEncoding, TidyInCharEncoding */
-		String^ TidyOptGetEncName(HtmlTidyOptionId optId) 
+		String^ TidyOptGetEncName(HtmlTidyOptionId optId)
 		{
 			ctmbstr str = tidyOptGetEncName(tdoc, (TidyOptionId)optId);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1874,7 +1874,7 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Get current pick list value for option by ID. Useful for enum types. */
-		String^ TidyOptGetCurrPick(HtmlTidyOptionId optId) 
+		String^ TidyOptGetCurrPick(HtmlTidyOptionId optId)
 		{
 			ctmbstr str = tidyOptGetCurrPick(tdoc, (TidyOptionId)optId);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1882,14 +1882,14 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Iterate over user declared tags */
-		TidyIterator TidyOptGetDeclTagList(void) 
+		TidyIterator TidyOptGetDeclTagList(void)
 		{
 			return tidyOptGetDeclTagList(tdoc);
 		};
 
 		/** Get next declared tag of specified type: TidyInlineTags, TidyBlockTags,
 		** TidyEmptyTags, TidyPreTags */
-		String^ TidyOptGetNextDeclTag(HtmlTidyOptionId optId, TidyIterator* iter) 
+		String^ TidyOptGetNextDeclTag(HtmlTidyOptionId optId, TidyIterator* iter)
 		{
 			ctmbstr str = tidyOptGetNextDeclTag(tdoc, (TidyOptionId)optId, iter);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1897,7 +1897,7 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Get option description */
-		String^ TidyOptGetDoc(TidyOption opt) 
+		String^ TidyOptGetDoc(TidyOption opt)
 		{
 			ctmbstr str = tidyOptGetDoc(tdoc, opt);
 			String^ ret = gcnew String(str, 0, tmbstrlen(str), Text::Encoding::UTF8);
@@ -1905,13 +1905,13 @@ public enum class HtmlTidyTextFormat
 		};
 
 		/** Iterate over a list of related options */
-		TidyIterator TidyOptGetDocLinksList(TidyOption opt) 
+		TidyIterator TidyOptGetDocLinksList(TidyOption opt)
 		{
 			return tidyOptGetDocLinksList(tdoc, opt);
 		};
 
 		/** Get next related option */
-		TidyOption TidyOptGetNextDocLinks(TidyIterator* pos) 
+		TidyOption TidyOptGetNextDocLinks(TidyIterator* pos)
 		{
 			return tidyOptGetNextDocLinks(tdoc, pos);
 		};
@@ -1927,27 +1927,27 @@ public enum class HtmlTidyTextFormat
 
 		/** @defgroup Parse Document Parse
 		**
-		** Parse markup from a given input source. String and filename 
+		** Parse markup from a given input source. String and filename
 		** functions added for convenience. HTML/XHTML version determined
 		** from input.
 		** @{
 		*/
 
 		/** Parse markup in named file */
-		int TidyParseFile(String^ filename) 
+		int TidyParseFile(String^ filename)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(fname, Text::Encoding::UTF8->GetBytes(filename));
 			return tidyParseFile(tdoc, fname);
 		};
 
 		/** Parse markup from the standard input */
-		int TidyParseStdin(void) 
+		int TidyParseStdin(void)
 		{
 			return tidyParseStdin(tdoc);
 		};
 
 		/** Parse markup in given String^ */
-		int TidyParseString(String^ content) 
+		int TidyParseString(String^ content)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(str, Text::Encoding::UTF8->GetBytes(content));
 			return tidyParseString(tdoc, str);
@@ -1961,15 +1961,15 @@ public enum class HtmlTidyTextFormat
 		** @{
 		*/
 		/** Execute configured cleanup and repair operations on parsed markup */
-		int TidyCleanAndRepair(void) 
+		int TidyCleanAndRepair(void)
 		{
 			return tidyCleanAndRepair(tdoc);
 		};
 
-		/** Run configured diagnostics on parsed and repaired markup. 
+		/** Run configured diagnostics on parsed and repaired markup.
 		** Must call TidyCleanAndRepair() first.
 		*/
-		int TidyRunDiagnostics(void) 
+		int TidyRunDiagnostics(void)
 		{
 			return tidyRunDiagnostics(tdoc);
 		};
@@ -1985,14 +1985,14 @@ public enum class HtmlTidyTextFormat
 		*/
 
 		/** Save to named file */
-		int TidySaveFile(String^ filename) 
+		int TidySaveFile(String^ filename)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(fname, Text::Encoding::UTF8->GetBytes(filename));
 			return tidySaveFile(tdoc, fname);
 		};
 
 		/** Save to standard output (FILE*) */
-		int TidySaveStdout(void) 
+		int TidySaveStdout(void)
 		{
 			return tidySaveStdout(tdoc);
 		};
@@ -2009,7 +2009,7 @@ public enum class HtmlTidyTextFormat
 			int status = tidySaveSink(tdoc, &outsink);
 			if (status >= 0)
 			{
-				String^ result = gcnew String((ctmbstr)outbuf.bp, 0, outbuf.size, Text::Encoding::UTF8);
+				String^ result = gcnew String((ctmbstr)outbuf.bp, 0, (int)outbuf.size, Text::Encoding::UTF8);
 				buffer = result;
 			}
 			tidyBufFree(&outbuf);
@@ -2024,20 +2024,20 @@ public enum class HtmlTidyTextFormat
 		*/
 		/** Save current settings to named file.
 		Only non-default values are written. */
-		int TidyOptSave([Out] String^% dst) 
+		int TidyOptSave([Out] String^% dst)
 		{
 			TidyBuffer outbuf = {0};
 			int status = tidyOptSaveBuffer(tdoc, &outbuf);
 			if (status >= 0)
 			{
-				String^ result = gcnew String((ctmbstr)outbuf.bp, 0, outbuf.size, Text::Encoding::UTF8);
+				String^ result = gcnew String((ctmbstr)outbuf.bp, 0, (int)outbuf.size, Text::Encoding::UTF8);
 				dst = result;
 			}
 			tidyBufFree(&outbuf);
 			return status;
 		};
 
-		int TidyOptSaveFile(String^ cfgfil) 
+		int TidyOptSaveFile(String^ cfgfil)
 		{
 			GENERATE_UNMANAGED_CMBTSTR_FOR_CURRENT_SCOPE(fname, Text::Encoding::UTF8->GetBytes(cfgfil));
 			return tidyOptSaveFile(tdoc, fname);
@@ -2050,17 +2050,17 @@ public enum class HtmlTidyTextFormat
 			return (no != status);
 		}
 
-		/* Error reporting functions 
+		/* Error reporting functions
 		*/
 
 		/** Write more complete information about errors to current error sink. */
-		void TidyErrorSummary(void) 
+		void TidyErrorSummary(void)
 		{
 			return tidyErrorSummary(tdoc);
 		};
 
 		/** Write more general information about markup to current error sink. */
-		void TidyGeneralInfo(void) 
+		void TidyGeneralInfo(void)
 		{
 			return tidyGeneralInfo(tdoc);
 		};
