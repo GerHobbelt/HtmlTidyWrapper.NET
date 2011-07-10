@@ -1,0 +1,21 @@
+========================================================================
+                  HtmlTidyWrapper ChangeLog
+========================================================================
+
+May 2008 - code fixes for the XmlDocument generation, which did not work with the
+           newly created C# and VB.NET sample code; previous use had not included
+           _writing_ the generated XmlDocument tree to file and thus a few issues
+           had not turned up before.
+           
+         - added C# and VB.NET sample applications so folks can see what the use
+           of HtmlTidyWrapper might look like.
+           
+         - Added 64-bit built targets to libtidy.
+         
+         - upgraded libtidy to the latest sourceforge CVS tree.
+
+
+Autumn 2007 - migration to MSVC2005; the MSVC2003 code and project are now obsoleted.
+
+
+Spring 2006 - initial version; used in a few apps.
